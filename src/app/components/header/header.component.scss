@@ -1,0 +1,47 @@
+.nav-bar {
+  display: block;
+  position: fixed;
+  box-shadow: 0px 2px 5px rgb(black, .2);
+  background-color: #b695c2;
+  width: 100vw;
+  opacity: 0.9;
+
+  .web {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5% 5%;
+
+    img {
+      width: 3.5em;
+      background-color: #eee7f0;
+      border-radius: 50%;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      width: 11%;
+      justify-content: space-between;
+      h4 {
+        font-size: 1.2rem;
+        font-weight: 900;
+      }
+    }
+    .social-info {
+      width: 30%;
+    }
+    .social-networks-list {
+      display: flex;
+      justify-content: space-around;
+      list-style: none;
+      li {
+        margin: auto;
+      }
+      a {
+        text-decoration: none;
+      }
+      img {
+        width: 3em;
+      }
+    }
+  }
+}
