@@ -1,4 +1,6 @@
 .commits-path {
   display: flex;
   justify-content: center;
+  max-height: 230px;
+  overflow-y: scroll;
 }

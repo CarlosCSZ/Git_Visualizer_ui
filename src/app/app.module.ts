@@ -6,13 +6,17 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
 import { FrontPageComponent } from './components/front-page/front-page.component';
 import { GraphComponent } from './components/graph/graph.component';
+import { PresentationComponent } from './components/presentation/presentation.component';
+import { CommitDetailsComponent } from './components/commit-details/commit-details.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     FrontPageComponent,
-    GraphComponent
+    GraphComponent,
+    PresentationComponent,
+    CommitDetailsComponent
   ],
   imports: [
     BrowserModule,

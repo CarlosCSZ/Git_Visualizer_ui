@@ -15,8 +15,8 @@ export class GraphComponent implements OnInit, AfterViewInit {
     this.createSVG();
     const svg = this.elementRef.nativeElement.querySelector('svg') as SVGElement;
     svg.style.backgroundColor = '#bdb6c9';
-    svg.style.borderRadius = '20%';
-    svg.style.overflow = 'scroll';
+    svg.style.borderRadius = '15px';
+    svg.style.display = 'block';
   }
 
   ngAfterViewInit(): void {
@@ -38,12 +38,12 @@ export class GraphComponent implements OnInit, AfterViewInit {
     ];
 
     this.drawPath(pathData);
-    const path = this.elementRef.nativeElement.querySelector('path') as HTMLElement;
+    const path = this.elementRef.nativeElement.querySelector('path') as SVGElement;
     const pathBoxSize = path.getBoundingClientRect();
     const pathHeigth = pathBoxSize.height;
 
-    const container = this.elementRef.nativeElement.querySelector('.commits-path') as HTMLElement;
-    container.style.height = pathHeigth + 100 + 'px';
+    const svgContainer = this.elementRef.nativeElement.querySelector('svg') as SVGElement;
+    svgContainer.style.height = pathHeigth + 100 + 'px';
   }
 
   private createSVG(): void {
@@ -53,7 +53,7 @@ export class GraphComponent implements OnInit, AfterViewInit {
     this.svg = d3
       .select(container)
       .append('svg')
-      .attr('width', '65%')
+      .attr('width', '95%')
       .attr('background-color', '#f0f8ff');
 
 
@@ -70,7 +70,7 @@ export class GraphComponent implements OnInit, AfterViewInit {
     this.svg
       .append('path')
       .datum(data)
-      .attr('transform', 'translate(200, 0)')
+      .attr('transform', 'translate(150, 0)')
       .attr('fill', 'none')
       .attr('stroke', '#124470') // Line color
       .attr('stroke-width', 4) // Line with
@@ -90,8 +90,8 @@ export class GraphComponent implements OnInit, AfterViewInit {
       ! excludedPoints.some(excludedPoint => (
         excludedPoint.x === point.x && excludedPoint.y === point.y
       ))
-    ))
-    console.log(pointsArray)
+    ));
+
     this.svg
       .selectAll('circle')
       .data(pointsArray)
@@ -100,7 +100,7 @@ export class GraphComponent implements OnInit, AfterViewInit {
       .attr('cx', (d: any) => d.x)
       .attr('cy', (d: any) => d.y)
       .attr('r', 5)
-      .attr('transform', 'translate(200, 0)');
+      .attr('transform', 'translate(150, 0)');
 
     this.svg
       .selectAll('text')
@@ -112,8 +112,7 @@ export class GraphComponent implements OnInit, AfterViewInit {
       .text((d: any) => d.x)
       .attr('text-anchor', 'middle')
       .attr('fill', 'black')
-      .attr('transform', 'translate(200, 0)');
-
+      .attr('transform', 'translate(150, 0)');
 
   }
 }
