@@ -12,7 +12,8 @@
       </div>
       <div class="commit-info">
         <h4>Message: <span>{{commit.message}}</span></h4>
-        <a href="{{commit.tree}}"><h4>Tree</h4></a>
+        <h4>Sha: <span>{{commit.sha.substring(0,6)}}</span></h4>
+        <a href="{{commit.gh_url}}" target="_blank"><h4>More Details</h4></a>
       </div>
     </div>
   </ng-template>
@@ -28,7 +29,7 @@
       </div>
       <div class="commit-info">
         <h4><span style="font-weight: 700;">Select a commit to show details</span></h4>
-        <a href=""><h4>Tree</h4></a>
+        <a href=""><h4>More Details</h4></a>
       </div>
     </div>
   </ng-template>

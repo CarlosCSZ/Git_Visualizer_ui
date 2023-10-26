@@ -10,9 +10,11 @@ export class CommitsService {
 
   constructor(private http: HttpClient) { }
 
-  getAllCommits() {
+  getAllCommits(repo: string) {
     return new Promise((resolve, reject) => {
-      this.http.get<CommitDetails[]>('http://localhost:3001/api/octo')
+      this.http.post<CommitDetails[]>('http://localhost:3001/api/octo', {
+        repo,
+      })
       .subscribe(
         (data) => resolve(data),
         (error) => reject(error)

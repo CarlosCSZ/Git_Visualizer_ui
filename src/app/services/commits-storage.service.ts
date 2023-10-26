@@ -14,7 +14,7 @@ export class CommitsStorageService {
     date: '',
     message: '',
     avatar: '',
-    tree: ''
+    gh_url: ''
   };
   private frontCommit = new BehaviorSubject<CommitDetails>({
     sha: '',
@@ -23,7 +23,7 @@ export class CommitsStorageService {
     date: '',
     message: '',
     avatar: '',
-    tree: ''
+    gh_url: ''
   })
 
   private _dBackCommit: CommitDetails = {
@@ -33,7 +33,7 @@ export class CommitsStorageService {
     date: '',
     message: '',
     avatar: '',
-    tree: ''
+    gh_url: ''
   };
   private backCommit = new BehaviorSubject<CommitDetails>({
     sha: '',
@@ -42,7 +42,7 @@ export class CommitsStorageService {
     date: '',
     message: '',
     avatar: '',
-    tree: ''
+    gh_url: ''
   })
 
   private frontState = new BehaviorSubject<boolean>(false);
@@ -67,7 +67,7 @@ export class CommitsStorageService {
     this._dFrontCommit.date = commit.date;
     this._dFrontCommit.message = commit.message;
     this._dFrontCommit.avatar = commit.avatar;
-    this._dFrontCommit.tree = commit.tree;
+    this._dFrontCommit.gh_url = commit.gh_url;
 
     this.frontState.next(true);
   }
@@ -78,7 +78,7 @@ export class CommitsStorageService {
     this._dBackCommit.date = commit.date;
     this._dBackCommit.message = commit.message;
     this._dBackCommit.avatar = commit.avatar;
-    this._dBackCommit.tree = commit.tree;
+    this._dBackCommit.gh_url = commit.gh_url;
 
     this.backState.next(true);
   }

@@ -5,5 +5,5 @@ export interface CommitDetails {
   date: string;
   message: string;
   avatar: string;
-  tree: string;
+  gh_url: string;
 }

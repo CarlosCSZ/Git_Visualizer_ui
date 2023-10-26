@@ -4,8 +4,6 @@ import {
   ElementRef,
   Input,
   OnInit,
-  Output,
-  EventEmitter,
 } from '@angular/core';
 import * as d3 from 'd3';
 import { CommitDetails } from 'src/app/models/commit.model';
@@ -19,19 +17,17 @@ import { CommitsService } from 'src/app/services/commits.service';
 })
 export class GraphComponent implements OnInit, AfterViewInit {
   private svg: any;
-  frontCommits!: CommitDetails[];
-  backCommits!: CommitDetails[];
+  commits!: CommitDetails[];
   excludedPoints = [{ x: 0, y: 50 }];
   @Input() side: string = '';
 
   constructor(
     private elementRef: ElementRef,
     private commitsService: CommitsService,
-    private commitsStorageService: CommitsStorageService,
+    private commitsStorageService: CommitsStorageService
   ) {}
 
   ngOnInit(): void {
-
     this.createSVG();
     const svg = this.elementRef.nativeElement.querySelector(
       'svg'
@@ -43,14 +39,21 @@ export class GraphComponent implements OnInit, AfterViewInit {
 
   async ngAfterViewInit(): Promise<void> {
     try {
-      const commits = <CommitDetails[]>(
-        await this.commitsService.getAllCommits()
+      console.log(this.side);
+      let repo = '';
+      if (this.side === 'front') {
+        repo = 'factura-electronica';
+      } else {
+        repo = 'API-fe';
+      }
+      console.log(repo)
+      this.commits = <CommitDetails[]>(
+        await this.commitsService.getAllCommits(repo)
       );
-      this.backCommits = commits;
 
-      const pathDatatest = this.formPathData(commits.length);
+      const pathDatatest = this.formPathData(this.commits.length);
 
-      this.drawPath(pathDatatest, commits);
+      this.drawPath(pathDatatest, this.commits);
       const path = this.elementRef.nativeElement.querySelector(
         'path'
       ) as SVGElement;
@@ -131,7 +134,6 @@ export class GraphComponent implements OnInit, AfterViewInit {
       .attr('cursor', 'pointer')
       .attr('data', (d: any) => d);
 
-
     this.svg
       .selectAll('text')
       .data(dataMerged)
@@ -139,7 +141,7 @@ export class GraphComponent implements OnInit, AfterViewInit {
       .append('text')
       .attr('x', (d: any) => d.x)
       .attr('y', (d: any) => d.y - 15)
-      .text((d: CommitDetails) => d.sha.substring(0, 6))
+      .text((d: CommitDetails) => d.date)
       .attr('text-anchor', 'middle')
       .attr('fill', 'black')
       .attr('font-weight', 700)
@@ -157,12 +159,13 @@ export class GraphComponent implements OnInit, AfterViewInit {
       });
 
     // Click event
-    this.svg
-      .selectAll('circle')
-      .on('click', (event: any, d: any) => {
-        console.log(d)
+    this.svg.selectAll('circle').on('click', (event: any, d: any) => {
+      if (this.side === 'front') {
+        this.commitsStorageService.setFrontCommit(d);
+      } else {
         this.commitsStorageService.setBackCommit(d);
-      });
+      }
+    });
   }
 
   formPathData(commitsCount: number) {
