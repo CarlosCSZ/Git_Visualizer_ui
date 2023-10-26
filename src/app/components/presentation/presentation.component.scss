@@ -1,14 +1,15 @@
 .projects-presentation {
   display: flex;
   flex-direction: column;
-  width: 90%;
+  width: 95%;
   margin: 1% auto 0;
 
   h3 {
+    font-size: 1.6rem;
     font-weight: 700;
     color: rgb(27, 24, 204);
     position: absolute;
-    left: calc(8.6%);
+    left: calc(7%);
     padding: 8px;
     box-shadow: 3px 2px 7px rgb(black, .1);
     background: transparent;
@@ -24,5 +25,48 @@
 
   app-commit-details {
     width: 30%;
+  }
+}
+
+@media screen and (min-width: 1140px) and (max-width: 1400px){
+  .container {
+    max-width: 100%;
+
+    h3 {
+      left: calc(4%);
+    }
+  }
+}
+
+@media screen and (max-width: 1139.9px){
+  .projects-presentation {
+    margin-top: 3%;
+    .container {
+      max-width: 100%;
+
+      .display {
+        flex-direction: column;
+        justify-items: center;
+      }
+      h3 {
+        left: calc(3%);
+      }
+      app-graph {
+        width:100%;
+        margin-left: -10px;
+      }
+
+      app-commit-details {
+        width: 60%;
+        margin: 0 auto;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 529.9px) {
+  app-commit-details {
+    width: 100% !important;
+    margin: 0 auto;
   }
 }

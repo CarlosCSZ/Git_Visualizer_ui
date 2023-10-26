@@ -18,7 +18,7 @@ import { CommitsService } from 'src/app/services/commits.service';
 export class GraphComponent implements OnInit, AfterViewInit {
   private svg: any;
   commits!: CommitDetails[];
-  excludedPoints = [{ x: 0, y: 50 }];
+  excludedPoints = [{ x: 0, y: 80 }];
   @Input() side: string = '';
 
   constructor(
@@ -39,14 +39,12 @@ export class GraphComponent implements OnInit, AfterViewInit {
 
   async ngAfterViewInit(): Promise<void> {
     try {
-      console.log(this.side);
       let repo = '';
       if (this.side === 'front') {
         repo = 'factura-electronica';
       } else {
         repo = 'API-fe';
       }
-      console.log(repo)
       this.commits = <CommitDetails[]>(
         await this.commitsService.getAllCommits(repo)
       );
@@ -78,7 +76,7 @@ export class GraphComponent implements OnInit, AfterViewInit {
     this.svg = d3
       .select(container)
       .append('svg')
-      .attr('width', '95%')
+      .attr('width', '100%')
       .attr('background-color', '#f0f8ff');
   }
 
@@ -93,11 +91,19 @@ export class GraphComponent implements OnInit, AfterViewInit {
       .y((d: any) => d.y)
       .curve(d3.curveBasis);
 
+    let translateX = 100;
+    if (window.innerWidth < 750) {
+      translateX = 150;
+    }
+    if (window.innerWidth < 500) {
+      translateX = 80;
+    }
+
     // Draw path
     this.svg
       .append('path')
       .datum(data)
-      .attr('transform', 'translate(150, 0)')
+      .attr('transform', `translate(${translateX}, 0)`)
       .attr('fill', 'none')
       .attr('stroke', '#124470') // Line color
       .attr('stroke-width', 4) // Line width
@@ -130,7 +136,7 @@ export class GraphComponent implements OnInit, AfterViewInit {
       .attr('cx', (d: any) => d.x)
       .attr('cy', (d: any) => d.y)
       .attr('r', 10)
-      .attr('transform', 'translate(150, 0)')
+      .attr('transform', `translate(${translateX}, 0)`)
       .attr('cursor', 'pointer')
       .attr('data', (d: any) => d);
 
@@ -146,7 +152,7 @@ export class GraphComponent implements OnInit, AfterViewInit {
       .attr('fill', 'black')
       .attr('font-weight', 700)
       .attr('font-size', 12)
-      .attr('transform', 'translate(150, 0)');
+      .attr('transform', `translate(${translateX}, 0)`);
 
     // Hover
     this.svg
@@ -169,37 +175,45 @@ export class GraphComponent implements OnInit, AfterViewInit {
   }
 
   formPathData(commitsCount: number) {
-    const pathData = [{ x: 0, y: 50 }];
+    const pathData = [{ x: 0, y: 80 }];
 
-    const pointsxLine = 3;
+    let pointsxLine = 3;
+    if (window.innerWidth < 750) {
+      pointsxLine = 1;
+    }
 
     let x: number = 50;
-    let y: number = 50;
+    let y: number = 80;
     const lines = Math.ceil(commitsCount / pointsxLine);
     const residual = commitsCount % pointsxLine;
+
     let totalLength: number = 0;
     if (commitsCount % pointsxLine !== 0) {
       totalLength =
         lines * pointsxLine +
-        (lines - 1) * pointsxLine +
+        (lines - 1) * 3 + // 3 points fro breaks
         1 - //add the initial length of pathData
         (pointsxLine - residual);
     } else {
-      totalLength = lines * pointsxLine + (lines - 1) * pointsxLine + 1;
+      totalLength = lines * pointsxLine + (lines - 1) * 3 + 1;
     }
 
     for (let i = 1; i <= lines; i++) {
       if (i % 2 === 0) {
         // Add points
         x -= 50;
-        for (let j = 1; j < pointsxLine; j++) {
+        for (let j = pointsxLine === 1 ? 0 : 1; j < pointsxLine; j++) {
           pathData.push({ x, y });
           x -= 200;
         }
-        pathData.push({ x, y });
+        if (window.innerWidth >= 750) {
+          pathData.push({ x, y });
+        } else {
+          x += 200;
+        }
         // breaks
         x -= 50;
-        for (let j = 1; j < pointsxLine; j++) {
+        for (let j = 1; j < 3; j++) {
           pathData.push({ x, y });
           this.excludedPoints.push({ x, y });
           x -= 50;
@@ -211,14 +225,18 @@ export class GraphComponent implements OnInit, AfterViewInit {
       } else {
         // Add points
         x += 50;
-        for (let j = 1; j < pointsxLine; j++) {
+        for (let j = pointsxLine === 1 ? 0 : 1; j < pointsxLine; j++) {
           pathData.push({ x, y });
           x += 200;
         }
-        pathData.push({ x, y });
+        if (window.innerWidth >= 750) {
+          pathData.push({ x, y });
+        } else {
+          x -= 200;
+        }
         // breaks
         x += 50;
-        for (let j = 1; j < pointsxLine; j++) {
+        for (let j = 1; j < 3; j++) {
           pathData.push({ x, y });
           this.excludedPoints.push({ x, y });
           x += 50;

@@ -1,19 +1,82 @@
 .front-page {
-  padding-top: 7%;
-  background-color: #422f5b;
-  border-radius: 85% 0 66% 0;
+  padding-top: 6%;
+  background-color: #4f386d;
+  border-radius: 74% 0 60% 0;
 
   h1 {
-    color: #dad3d3;
+    color: #ebdede;
   }
   .intro-p {
     margin-bottom: 2.5%;
-    color: #dad3d3;
-    font-size: 1.6rem;
+    color: #ebdede;
+    font-size: 1.7rem;
     text-align: justify;
     font-weight: 600;
   }
   .bottom {
     margin-bottom: 5%;
+  }
+}
+
+@media screen and (min-width: 1000px) and (max-width: 1300px){
+  .front-page{
+    border-radius: 70% 0 56% 0;
+
+    h1 {
+      font-size: 2.2rem;
+    }
+    .intro-p {
+      font-size: 1.5rem;
+    }
+  }
+}
+
+@media screen and (min-width: 700px) and (max-width: 999.9px){
+  .front-page{
+    border-radius: 55% 0 45% 0;
+
+    .col-md-6 {
+      width: 50%;
+    }
+    h1 {
+      font-size: 2.1rem;
+    }
+    .intro-p {
+      font-size: 1.4rem;
+    }
+  }
+}
+
+@media screen and (min-width: 450px) and (max-width: 699.9px){
+  .front-page{
+    border-radius: 32% 0 25% 0;
+
+    .col-md-6 {
+      width: 90%;
+    }
+    h1 {
+      margin-top: 6%;
+      font-size: 1.8rem;
+    }
+    .intro-p {
+      font-size: 1.3rem;
+    }
+  }
+}
+
+@media screen and (min-width: 290px) and (max-width: 449.9px){
+  .front-page{
+    border-radius: 22% 0 17% 0;
+
+    .col-md-6 {
+      width: 90%;
+    }
+    h1 {
+      margin-top: 8%;
+      font-size: 1.8rem;
+    }
+    .intro-p {
+      font-size: 1.3rem;
+    }
   }
 }

@@ -4,3 +4,10 @@
   max-height: 230px;
   overflow-y: scroll;
 }
+
+@media screen and (min-width: 900px) and (max-width: 1300px){
+  .commits-path {
+    display: block;
+    overflow-x: auto;
+  }
+}
