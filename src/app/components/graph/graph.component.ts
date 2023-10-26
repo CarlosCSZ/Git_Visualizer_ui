@@ -7,6 +7,7 @@ import {
 } from '@angular/core';
 import * as d3 from 'd3';
 import { ToastrService } from 'ngx-toastr';
+import { environment } from 'src/app/environments/environment';
 
 import { CommitDetails } from 'src/app/models/commit.model';
 import { CommitsStorageService } from 'src/app/services/commits-storage.service';
@@ -22,6 +23,8 @@ export class GraphComponent implements OnInit, AfterViewInit {
   commits!: CommitDetails[];
   excludedPoints = [{ x: 0, y: 80 }];
   @Input() side: string = '';
+  private frontRepo = environment.FRONT_REPO;
+  private backRepo = environment.BACK_REPO;
 
   constructor(
     private elementRef: ElementRef,
@@ -44,9 +47,9 @@ export class GraphComponent implements OnInit, AfterViewInit {
     try {
       let repo = '';
       if (this.side === 'front') {
-        repo = 'factura-electronica';
+        repo = this.frontRepo;
       } else {
-        repo = 'API-fe';
+        repo = this.backRepo;
       }
       this.commits = <CommitDetails[]>(
         await this.commitsService.getAllCommits(repo)
