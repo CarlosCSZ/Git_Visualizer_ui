@@ -4,9 +4,12 @@ import {
   ElementRef,
   Input,
   OnInit,
+  Output,
+  EventEmitter,
 } from '@angular/core';
 import * as d3 from 'd3';
 import { CommitDetails } from 'src/app/models/commit.model';
+import { CommitsStorageService } from 'src/app/services/commits-storage.service';
 import { CommitsService } from 'src/app/services/commits.service';
 
 @Component({
@@ -19,19 +22,22 @@ export class GraphComponent implements OnInit, AfterViewInit {
   frontCommits!: CommitDetails[];
   backCommits!: CommitDetails[];
   excludedPoints = [{ x: 0, y: 50 }];
+  @Input() side: string = '';
 
   constructor(
     private elementRef: ElementRef,
-    private commitsService: CommitsService
+    private commitsService: CommitsService,
+    private commitsStorageService: CommitsStorageService,
   ) {}
 
   ngOnInit(): void {
+
     this.createSVG();
     const svg = this.elementRef.nativeElement.querySelector(
       'svg'
     ) as SVGElement;
     svg.style.backgroundColor = '#bdb6c9';
-    svg.style.borderRadius = '15px';
+    svg.style.borderRadius = '25px';
     svg.style.display = 'block';
   }
 
@@ -42,26 +48,9 @@ export class GraphComponent implements OnInit, AfterViewInit {
       );
       this.backCommits = commits;
 
-      const pathData = [
-        { x: 0, y: 50 },
-        { x: 100, y: 50 },
-        { x: 300, y: 50 },
-        { x: 500, y: 50 },
-        { x: 550, y: 50 },
-        { x: 600, y: 100 },
-        { x: 550, y: 150 },
-        { x: 500, y: 150 },
-        { x: 300, y: 150 },
-        { x: 100, y: 150 },
-        { x: 50, y: 150 },
-        { x: 0, y: 200 },
-        { x: 50, y: 250 },
-        { x: 100, y: 250 },
-      ];
-
       const pathDatatest = this.formPathData(commits.length);
 
-      this.drawPath(pathDatatest);
+      this.drawPath(pathDatatest, commits);
       const path = this.elementRef.nativeElement.querySelector(
         'path'
       ) as SVGElement;
@@ -90,7 +79,10 @@ export class GraphComponent implements OnInit, AfterViewInit {
       .attr('background-color', '#f0f8ff');
   }
 
-  private drawPath(data: any[]): void {
+  private drawPath(
+    data: { x: number; y: number }[],
+    commits: CommitDetails[]
+  ): void {
     // Create line generator
     const lineGenerator = d3
       .line()
@@ -117,27 +109,60 @@ export class GraphComponent implements OnInit, AfterViewInit {
         )
     );
 
+    const dataMerged = [];
+    for (let i = 0; i < commits.length; i++) {
+      const point = pointsArray[i];
+      const commit = commits[i];
+      dataMerged.push({
+        ...commit,
+        ...point,
+      });
+    }
+
     this.svg
       .selectAll('circle')
-      .data(pointsArray)
+      .data(dataMerged)
       .enter()
       .append('circle')
       .attr('cx', (d: any) => d.x)
       .attr('cy', (d: any) => d.y)
-      .attr('r', 5)
-      .attr('transform', 'translate(150, 0)');
+      .attr('r', 10)
+      .attr('transform', 'translate(150, 0)')
+      .attr('cursor', 'pointer')
+      .attr('data', (d: any) => d);
+
 
     this.svg
       .selectAll('text')
-      .data(pointsArray)
+      .data(dataMerged)
       .enter()
       .append('text')
       .attr('x', (d: any) => d.x)
-      .attr('y', (d: any) => d.y - 10)
-      .text((d: any) => d.x)
+      .attr('y', (d: any) => d.y - 15)
+      .text((d: CommitDetails) => d.sha.substring(0, 6))
       .attr('text-anchor', 'middle')
       .attr('fill', 'black')
+      .attr('font-weight', 700)
+      .attr('font-size', 12)
       .attr('transform', 'translate(150, 0)');
+
+    // Hover
+    this.svg
+      .selectAll('circle')
+      .on('mouseenter', function (event: any, d: any) {
+        d3.select(event.currentTarget).attr('fill', '#b695c2').attr('r', 13);
+      })
+      .on('mouseleave', function (event: any, d: any) {
+        d3.select(event.currentTarget).attr('fill', 'black').attr('r', 10);
+      });
+
+    // Click event
+    this.svg
+      .selectAll('circle')
+      .on('click', (event: any, d: any) => {
+        console.log(d)
+        this.commitsStorageService.setBackCommit(d);
+      });
   }
 
   formPathData(commitsCount: number) {
@@ -154,8 +179,8 @@ export class GraphComponent implements OnInit, AfterViewInit {
       totalLength =
         lines * pointsxLine +
         (lines - 1) * pointsxLine +
-        1 -
-        (pointsxLine - residual); //add the initial length of pathData
+        1 - //add the initial length of pathData
+        (pointsxLine - residual);
     } else {
       totalLength = lines * pointsxLine + (lines - 1) * pointsxLine + 1;
     }

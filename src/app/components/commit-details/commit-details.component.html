@@ -1,15 +1,35 @@
 <div class="container">
-  <div class="commit-card">
-    <div class="committer">
-      <img src="" alt="avatar">
-      <div class="auhtor-info">
-        <h3>CarlosCSZ</h3>
-        <h3>ccherrez18@gmail.com</h3>
+  <ng-container *ngIf="render; then commitContent else noCommitContent"></ng-container>
+
+  <ng-template #commitContent>
+    <div class="commit-card" *ngIf="render">
+      <div class="committer">
+        <img src="{{commit.avatar}}" alt="avatar">
+        <div class="auhtor-info">
+          <h3>{{commit.author}}</h3>
+          <h3>{{commit.email}}</h3>
+        </div>
+      </div>
+      <div class="commit-info">
+        <h4>Message: <span>{{commit.message}}</span></h4>
+        <a href="{{commit.tree}}"><h4>Tree</h4></a>
       </div>
     </div>
-    <div class="commit-info">
-      <h4>Message: <span>some random message</span></h4>
-      <a href=""><h4>Tree</h4></a>
+  </ng-template>
+
+  <ng-template #noCommitContent>
+    <div class="commit-card">
+      <div class="committer">
+        <img src="assets/icons/user.png" alt="avatar">
+        <div class="auhtor-info">
+          <h3>Author</h3>
+          <h3>Email</h3>
+        </div>
+      </div>
+      <div class="commit-info">
+        <h4><span style="font-weight: 700;">Select a commit to show details</span></h4>
+        <a href=""><h4>Tree</h4></a>
+      </div>
     </div>
-  </div>
+  </ng-template>
 </div>

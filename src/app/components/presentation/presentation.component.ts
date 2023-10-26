@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CommitDetails } from 'src/app/models/commit.model';
 
 @Component({
   selector: 'app-presentation',
@@ -11,5 +12,9 @@ export class PresentationComponent implements OnInit {
 
   ngOnInit(): void {
     //
+  }
+
+  showFrontCommit(commit: CommitDetails) {
+    console.log(commit)
   }
 }

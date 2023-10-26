@@ -12,10 +12,11 @@ const routes: Routes = [
     redirectTo: "/home",
     pathMatch: "full"
   },
-  // {
-  //   path: '**',
-  //   component: NotFoundComponent
-  // }
+  {
+    path: '**',
+    redirectTo: "/home",
+    pathMatch: "full"
+  }
 ];
 
 @NgModule({
