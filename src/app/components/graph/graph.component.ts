@@ -6,6 +6,8 @@ import {
   OnInit,
 } from '@angular/core';
 import * as d3 from 'd3';
+import { ToastrService } from 'ngx-toastr';
+
 import { CommitDetails } from 'src/app/models/commit.model';
 import { CommitsStorageService } from 'src/app/services/commits-storage.service';
 import { CommitsService } from 'src/app/services/commits.service';
@@ -24,7 +26,8 @@ export class GraphComponent implements OnInit, AfterViewInit {
   constructor(
     private elementRef: ElementRef,
     private commitsService: CommitsService,
-    private commitsStorageService: CommitsStorageService
+    private commitsStorageService: CommitsStorageService,
+    private mensaje: ToastrService,
   ) {}
 
   ngOnInit(): void {
@@ -63,7 +66,8 @@ export class GraphComponent implements OnInit, AfterViewInit {
       ) as SVGElement;
       svgContainer.style.height = pathHeigth + 100 + 'px';
     } catch (error) {
-      alert(error);
+      this.mensaje.error('No se pudo encontrar commits. Intentelo mas tarde.');
+      console.log(error);
     }
   }
 

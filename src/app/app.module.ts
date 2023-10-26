@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
+import { ToastrModule } from 'ngx-toastr';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -23,6 +24,11 @@ import { CommitDetailsComponent } from './components/commit-details/commit-detai
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    ToastrModule.forRoot({
+      positionClass: 'toast-center-left',
+      preventDuplicates: true,
+      closeButton: true,
+    }),
   ],
   providers: [],
   bootstrap: [AppComponent]
