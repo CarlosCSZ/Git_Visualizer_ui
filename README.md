@@ -1,27 +1,84 @@
-# GhGraphUI
+  <h1 align="center">GIT VISUALIZER</h1>
+<p align="center">
+  <img src="src/assets/icons/git.png" width="200" alt="Git Visualizer Logo Logo" />
+</p>
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.1.5.
+# Git Visualizer UI 1.0
 
-## Development server
+In this first version of this web application, provides a graphical representation of its own repositories, front-end and back-end.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## Description
 
-## Code scaffolding
+This is a web application that provides a graphical representation of its own repository's commit history and changes over time, as well as, its API repository's commits.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## API urls
 
-## Build
+(local): http://localhost:4200/home <br />
+(production): ... <br />
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+## 📒Dependencies
 
-## Running unit tests
+**Node.js** version 18 or above
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Download and install node.js in your computer using the following page [Node official page](https://nodejs.org/en).
 
-## Running end-to-end tests
+**Angular** version 16 or above
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+Install Angular CLI. Use this provided documentation [Angular Docs](https://angular.io/docs).
 
-## Further help
+```
+npm install -g @angular/cli
+```
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+## 📝Running the app
+
+**_1. Clone the repository_**
+
+**Using HTTPS**
+
+```
+git clone https://github.com/CarlosCSZ/Git_Visualizer_ui.git
+```
+
+**Using SSH KEY**<br />
+-Create and add ssh key in your computer.<br />
+-Attach your public ssh key into your GitHub account and write the following command.<br />
+
+```
+git clone git@github.com:CarlosCSZ/Git_Visualizer_ui.git
+```
+
+<br />**_2. Install dependencies_**<br />
+
+```bash
+$ npm install
+```
+
+<br />**_3. Configure the environment variables_**
+
+**From the root directory go to the following path: src/app/environments/. Then, open the environment.ts file.**
+<br />The default local settings are:<br />
+API_URL: 'http://localhost:3001/api'<br />
+FRONT_REPO: 'Git_Visualizer_ui'<br />
+BACK_REPO: 'Git_Visualizer_api'<br />
+
+--In case you set the API to listen in a different PORT than 3001, then change the API_URL variable as needed. Adittionally, if you set the API for pulling commits from a different GitHub User you may want to change the repos variables as needed:--<br />
+FRONT_REPO: as the repo's name you want to pull information from<br />
+BACK_REPO: as the repo's name you want to pull information from<br />
+
+<br />**_4. Start the APP_**
+
+**From the root directory**
+
+```
+ $ npm run start
+```
+
+The app will be running at the following url http://localhost:4200/
+
+## Test
+
+```bash
+# unit tests
+$ npm run test
+```
