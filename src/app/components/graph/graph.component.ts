@@ -20,17 +20,18 @@ import { CommitsService } from 'src/app/services/commits.service';
 })
 export class GraphComponent implements OnInit, AfterViewInit {
   private svg: any;
-  commits!: CommitDetails[];
-  excludedPoints = [{ x: 0, y: 80 }];
+  private commits!: CommitDetails[];
+  private excludedPoints = [{ x: 0, y: 80 }];
   @Input() side: string = '';
   private frontRepo = environment.FRONT_REPO;
   private backRepo = environment.BACK_REPO;
+  loading = true;
 
   constructor(
     private elementRef: ElementRef,
     private commitsService: CommitsService,
     private commitsStorageService: CommitsStorageService,
-    private mensaje: ToastrService,
+    private mensaje: ToastrService
   ) {}
 
   ngOnInit(): void {
@@ -43,35 +44,40 @@ export class GraphComponent implements OnInit, AfterViewInit {
     svg.style.display = 'block';
   }
 
-  async ngAfterViewInit(): Promise<void> {
-    try {
-      let repo = '';
-      if (this.side === 'front') {
-        repo = this.frontRepo;
-      } else {
-        repo = this.backRepo;
-      }
-      this.commits = <CommitDetails[]>(
-        await this.commitsService.getAllCommits(repo)
-      );
-
-      const pathDatatest = this.formPathData(this.commits.length);
-
-      this.drawPath(pathDatatest, this.commits);
-      const path = this.elementRef.nativeElement.querySelector(
-        'path'
-      ) as SVGElement;
-      const pathBoxSize = path.getBoundingClientRect();
-      const pathHeigth = pathBoxSize.height;
-
-      const svgContainer = this.elementRef.nativeElement.querySelector(
-        'svg'
-      ) as SVGElement;
-      svgContainer.style.height = pathHeigth + 100 + 'px';
-    } catch (error) {
-      this.mensaje.error('No se pudo encontrar commits. Intentelo mas tarde.');
-      console.log(error);
+  ngAfterViewInit(): void {
+    let repo = '';
+    if (this.side === 'front') {
+      repo = this.frontRepo;
+    } else {
+      repo = this.backRepo;
     }
+    this.commitsService.getAllCommits(repo)
+    .subscribe({
+      next: (data) => {
+        this.commits = data;
+        this.loading = false;
+
+
+        const pathDatatest = this.formPathData(this.commits.length);
+
+        this.drawPath(pathDatatest, this.commits);
+        const path = this.elementRef.nativeElement.querySelector(
+          'path'
+        ) as SVGElement;
+        const pathBoxSize = path.getBoundingClientRect();
+        const pathHeigth = pathBoxSize.height;
+
+        const svgContainer = this.elementRef.nativeElement.querySelector(
+          'svg'
+        ) as SVGElement;
+        svgContainer.style.height = pathHeigth + 100 + 'px';
+      },
+      error: (error) => {
+        this.mensaje.error('No se pudo encontrar commits. Intentelo mas tarde.');
+        console.log(error);
+        this.loading = true;
+      }
+    });
   }
 
   private createSVG(): void {
