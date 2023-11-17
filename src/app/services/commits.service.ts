@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { CommitDetails } from '../models/commit.model';
 import { environment } from '../environments/environment';
+import { Observable, delay, retry, RetryConfig } from 'rxjs';
 
 
 @Injectable({
@@ -12,15 +13,19 @@ export class CommitsService {
 
   constructor(private http: HttpClient) { }
 
-  getAllCommits(repo: string) {
-    return new Promise((resolve, reject) => {
-      this.http.post<CommitDetails[]>(`${this.baseUrl}/commits`, {
-        repo,
-      })
-      .subscribe(
-        (data) => resolve(data),
-        (error) => reject(error)
-      )
-    });
+  getAllCommits(repo: string): Observable<CommitDetails[]> {
+    const retryConfig: RetryConfig = {
+      count: 2,
+      delay: 2000
+    };
+
+    return this.http.get<CommitDetails[]>(`${this.baseUrl}/commits`, {
+      params: {
+        repo
+      }
+    })
+    .pipe(
+      retry(retryConfig)
+    );
   }
 }
