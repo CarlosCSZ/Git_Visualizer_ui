@@ -26,11 +26,26 @@
         font-weight: 900;
       }
     }
+
+    .sections {
+      padding-top: 3px;
+      margin-right: 25%;
+      width: 22%;
+
+      li {
+        padding: .8% 6%;
+        background-color: rgb(125, 131, 180);
+        font-size: 1.6rem;
+        font-weight: 600;
+        border-radius: 25px;
+      }
+    }
+
     .social-info {
       padding-top: 3px;
-      width: 30%;
+      width: 35%;
     }
-    .social-networks-list {
+    .social-networks-list, .categories {
       display: flex;
       justify-content: space-around;
       list-style: none;

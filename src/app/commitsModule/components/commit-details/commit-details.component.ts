@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { CommitDetails } from 'src/app/models/commit.model';
+import { CommitDetails } from 'src/app/commitsModule/models/commit.model';
 import { CommitsStorageService } from 'src/app/services/commits-storage.service';
 
 @Component({

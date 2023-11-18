@@ -9,7 +9,7 @@ import * as d3 from 'd3';
 import { ToastrService } from 'ngx-toastr';
 import { environment } from 'src/app/environments/environment';
 
-import { CommitDetails } from 'src/app/models/commit.model';
+import { CommitDetails } from 'src/app/commitsModule/models/commit.model';
 import { CommitsStorageService } from 'src/app/services/commits-storage.service';
 import { CommitsService } from 'src/app/services/commits.service';
 

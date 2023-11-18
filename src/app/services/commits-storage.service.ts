@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CommitDetails } from '../models/commit.model';
+import { CommitDetails } from '../commitsModule/models/commit.model';
 import { BehaviorSubject } from 'rxjs';
 
 @Injectable({

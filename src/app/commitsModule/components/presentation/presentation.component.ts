@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CommitDetails } from 'src/app/models/commit.model';
+import { CommitDetails } from 'src/app/commitsModule/models/commit.model';
 
 @Component({
   selector: 'app-presentation',

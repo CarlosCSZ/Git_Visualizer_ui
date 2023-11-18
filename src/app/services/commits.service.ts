@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { CommitDetails } from '../models/commit.model';
+import { CommitDetails } from '../commitsModule/models/commit.model';
 import { environment } from '../environments/environment';
 import { Observable, delay, retry, RetryConfig } from 'rxjs';
 
@@ -16,7 +16,7 @@ export class CommitsService {
   getAllCommits(repo: string): Observable<CommitDetails[]> {
     const retryConfig: RetryConfig = {
       count: 2,
-      delay: 2000
+      delay: 3000
     };
 
     return this.http.get<CommitDetails[]>(`${this.baseUrl}/commits`, {
