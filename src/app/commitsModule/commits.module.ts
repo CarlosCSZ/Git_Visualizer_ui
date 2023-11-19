@@ -9,6 +9,8 @@ import { GraphComponent } from './components/graph/graph.component';
 import { PresentationComponent } from './components/presentation/presentation.component';
 import { CommitDetailsComponent } from './components/commit-details/commit-details.component';
 import { HomeComponent } from './pages/home/home.component';
+import { PrivateComponent } from './pages/private.component';
+import { RepoFormComponent } from './components/repo-form/repo-form.component';
 
 
 @NgModule({
@@ -20,6 +22,8 @@ import { HomeComponent } from './pages/home/home.component';
     PresentationComponent,
     CommitDetailsComponent,
     HomeComponent,
+    PrivateComponent,
+    RepoFormComponent,
   ],
   imports: [
     CommonModule,

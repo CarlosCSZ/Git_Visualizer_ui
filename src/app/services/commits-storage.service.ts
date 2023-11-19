@@ -43,7 +43,10 @@ export class CommitsStorageService {
     message: '',
     avatar: '',
     gh_url: ''
-  })
+  });
+
+  private frontCommits = new BehaviorSubject<CommitDetails[]>([]);
+  private backCommits = new BehaviorSubject<CommitDetails[]>([]);
 
   private frontState = new BehaviorSubject<boolean>(false);
   private backState = new BehaviorSubject<boolean>(false);
@@ -52,6 +55,8 @@ export class CommitsStorageService {
   backCommit$ = this.backCommit.asObservable();
   frontState$ = this.frontState.asObservable();
   backState$ = this.backState.asObservable();
+  frontCommits$ = this.frontCommits.asObservable();
+  backCommits$ = this.backCommits.asObservable();
 
   getFrontCommit() {
     return this._dFrontCommit;
@@ -69,8 +74,11 @@ export class CommitsStorageService {
     this._dFrontCommit.avatar = commit.avatar;
     this._dFrontCommit.gh_url = commit.gh_url;
 
+    this.frontCommit.next(this._dFrontCommit);
+
     this.frontState.next(true);
   }
+
   setBackCommit(commit: CommitDetails) {
     this._dBackCommit.sha = commit.sha;
     this._dBackCommit.author = commit.author;
@@ -80,7 +88,17 @@ export class CommitsStorageService {
     this._dBackCommit.avatar = commit.avatar;
     this._dBackCommit.gh_url = commit.gh_url;
 
+    this.backCommit.next(this._dBackCommit);
+
     this.backState.next(true);
+  }
+
+  setFrontCommits(commits: CommitDetails[]) {
+    this.frontCommits.next(commits);
+  }
+
+  setBackCommits(commits: CommitDetails[]) {
+    this.backCommits.next(commits);
   }
 
 }

@@ -1,0 +1,45 @@
+.repo-form {
+  padding-top: 4%;
+  background-color: #4f386d;
+  border-radius: 74% 0 60% 0;
+
+  .col-md-6 {
+    display: flex;
+    justify-content: center;
+    padding: 5% 0;
+  }
+  .formulario {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    color: #ebdede;
+
+    .title {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    div {
+      display: grid;
+      grid-template-columns: auto 70%;
+      gap: 10px;
+      font-size: 1.6rem;
+      font-weight: 600;
+
+      input {
+        padding: 0 .5%;
+        box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.2);
+      }
+    }
+  }
+
+  p {
+    font-size: 1.4rem;
+    font-weight: 600;
+    border: solid rgba(113, 53, 53, 0.2);
+    box-shadow: 3px 3px 5px rgba(149, 85, 85, 0.2);
+    line-height: 15px;
+    padding: 10px;
+  }
+}

@@ -2,14 +2,10 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { ToastrModule } from 'ngx-toastr';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HeaderComponent } from './commitsModule/components/header/header.component';
-import { FrontPageComponent } from './commitsModule/components/front-page/front-page.component';
-import { GraphComponent } from './commitsModule/components/graph/graph.component';
-import { PresentationComponent } from './commitsModule/components/presentation/presentation.component';
-import { CommitDetailsComponent } from './commitsModule/components/commit-details/commit-details.component';
 import { CommitsModule } from './commitsModule/commits.module';
 
 @NgModule({
@@ -23,9 +19,10 @@ import { CommitsModule } from './commitsModule/commits.module';
     CommitsModule,
     ToastrModule.forRoot({
       positionClass: 'toast-center-left',
-      preventDuplicates: true,
+      preventDuplicates: false,
       closeButton: true,
     }),
+    ReactiveFormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

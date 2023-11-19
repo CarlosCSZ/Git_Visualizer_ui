@@ -6,6 +6,10 @@
   width: 100%;
   opacity: 0.8;
 
+  ul {
+    padding-left: 0;
+  }
+
   .web {
     display: flex;
     justify-content: space-between;
@@ -34,7 +38,8 @@
 
       li {
         padding: .8% 6%;
-        background-color: rgb(125, 131, 180);
+        background-color: rgb(117 104 138);
+        opacity: 1;
         font-size: 1.6rem;
         font-weight: 600;
         border-radius: 25px;

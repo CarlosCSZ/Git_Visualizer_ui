@@ -1,18 +1,9 @@
 <section class="projects-presentation">
   <div class="container">
-    <div class="front display">
-      <h3>Front-End app</h3>
-      <app-graph
-      side="front"></app-graph>
-      <app-commit-details
-      side="front"></app-commit-details>
-    </div>
-    <div class="back display">
-      <h3>Back-End app</h3>
-      <app-graph
-      side="back"></app-graph>
-      <app-commit-details
-      side="back"></app-commit-details>
+    <div class="display">
+      <h3>{{ projectTitle }}</h3>
+      <app-graph [side]="projectSide"></app-graph>
+      <app-commit-details [side]="projectSide"></app-commit-details>
     </div>
   </div>
 </section>

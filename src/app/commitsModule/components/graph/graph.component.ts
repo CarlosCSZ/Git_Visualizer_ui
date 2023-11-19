@@ -1,37 +1,29 @@
 import {
-  AfterViewInit,
   Component,
   ElementRef,
   Input,
   OnInit,
 } from '@angular/core';
 import * as d3 from 'd3';
-import { ToastrService } from 'ngx-toastr';
-import { environment } from 'src/app/environments/environment';
 
 import { CommitDetails } from 'src/app/commitsModule/models/commit.model';
 import { CommitsStorageService } from 'src/app/services/commits-storage.service';
-import { CommitsService } from 'src/app/services/commits.service';
 
 @Component({
   selector: 'app-graph',
   templateUrl: './graph.component.html',
   styleUrls: ['./graph.component.scss'],
 })
-export class GraphComponent implements OnInit, AfterViewInit {
+export class GraphComponent implements OnInit {
   private svg: any;
   private commits!: CommitDetails[];
   private excludedPoints = [{ x: 0, y: 80 }];
   @Input() side: string = '';
-  private frontRepo = environment.FRONT_REPO;
-  private backRepo = environment.BACK_REPO;
   loading = true;
 
   constructor(
     private elementRef: ElementRef,
-    private commitsService: CommitsService,
     private commitsStorageService: CommitsStorageService,
-    private mensaje: ToastrService
   ) {}
 
   ngOnInit(): void {
@@ -42,43 +34,45 @@ export class GraphComponent implements OnInit, AfterViewInit {
     svg.style.backgroundColor = '#bdb6c9';
     svg.style.borderRadius = '25px';
     svg.style.display = 'block';
-  }
+    svg.style.minHeight = '180px';
 
-  ngAfterViewInit(): void {
-    let repo = '';
     if (this.side === 'front') {
-      repo = this.frontRepo;
+      this.commitsStorageService.frontCommits$
+        .subscribe((commits) => {
+          this.commits = commits;
+          if (this.commits.length > 0) {
+            this.showGraph();
+            this.loading = false;
+          }
+        });
     } else {
-      repo = this.backRepo;
+      this.commitsStorageService.backCommits$
+        .subscribe((commits) => {
+          this.commits = commits;
+          if (this.commits.length > 0) {
+            this.showGraph();
+            this.loading = false;
+          }
+        });
     }
-    this.commitsService.getAllCommits(repo)
-    .subscribe({
-      next: (data) => {
-        this.commits = data;
-        this.loading = false;
 
-
-        const pathDatatest = this.formPathData(this.commits.length);
-
-        this.drawPath(pathDatatest, this.commits);
-        const path = this.elementRef.nativeElement.querySelector(
-          'path'
-        ) as SVGElement;
-        const pathBoxSize = path.getBoundingClientRect();
-        const pathHeigth = pathBoxSize.height;
-
-        const svgContainer = this.elementRef.nativeElement.querySelector(
-          'svg'
-        ) as SVGElement;
-        svgContainer.style.height = pathHeigth + 100 + 'px';
-      },
-      error: (error) => {
-        this.mensaje.error('No se pudo encontrar commits. Intentelo mas tarde.');
-        console.log(error);
-        this.loading = true;
-      }
-    });
   }
+
+  private showGraph() {
+    const pathDatatest = this.formPathData(this.commits.length);
+
+    this.drawPath(pathDatatest, this.commits);
+    const path = this.elementRef.nativeElement.querySelector(
+      'path'
+    ) as SVGElement;
+    const pathBoxSize = path.getBoundingClientRect();
+    const pathHeigth = pathBoxSize.height;
+
+    const svgContainer = this.elementRef.nativeElement.querySelector(
+      'svg'
+    ) as SVGElement;
+    svgContainer.style.height = pathHeigth + 130 + 'px';
+  };
 
   private createSVG(): void {
     const container = this.elementRef.nativeElement.querySelector(
@@ -91,13 +85,13 @@ export class GraphComponent implements OnInit, AfterViewInit {
       .append('svg')
       .attr('width', '100%')
       .attr('background-color', '#f0f8ff');
-  }
+  };
 
   private drawPath(
     data: { x: number; y: number }[],
     commits: CommitDetails[]
   ): void {
-    // Create line generator
+    // Creating line generator
     const lineGenerator = d3
       .line()
       .x((d: any) => d.x)
@@ -112,17 +106,22 @@ export class GraphComponent implements OnInit, AfterViewInit {
       translateX = 80;
     }
 
-    // Draw path
-    this.svg
-      .append('path')
-      .datum(data)
-      .attr('transform', `translate(${translateX}, 0)`)
-      .attr('fill', 'none')
-      .attr('stroke', '#124470') // Line color
-      .attr('stroke-width', 4) // Line width
-      .attr('d', lineGenerator);
+    const path = this.elementRef.nativeElement.querySelector(
+      'path'
+    );
+    // Drawing path
+    if (!path) {
+      this.svg
+        .append('path')
+        .datum(data)
+        .attr('transform', `translate(${translateX}, 0)`)
+        .attr('fill', 'none')
+        .attr('stroke', '#124470') // Line color
+        .attr('stroke-width', 4) // Line width
+        .attr('d', lineGenerator);
+    }
 
-    // Draw points
+    // Drawing points
     const pointsArray = data.filter(
       (point) =>
         !this.excludedPoints.some(
@@ -185,7 +184,7 @@ export class GraphComponent implements OnInit, AfterViewInit {
         this.commitsStorageService.setBackCommit(d);
       }
     });
-  }
+  };
 
   formPathData(commitsCount: number) {
     const pathData = [{ x: 0, y: 80 }];
@@ -204,8 +203,8 @@ export class GraphComponent implements OnInit, AfterViewInit {
     if (commitsCount % pointsxLine !== 0) {
       totalLength =
         lines * pointsxLine +
-        (lines - 1) * 3 + // 3 points fro breaks
-        1 - //add the initial length of pathData
+        (lines - 1) * 3 + // 3 points from breaks
+        1 - //adding the initial length of pathData
         (pointsxLine - residual);
     } else {
       totalLength = lines * pointsxLine + (lines - 1) * 3 + 1;
@@ -262,5 +261,5 @@ export class GraphComponent implements OnInit, AfterViewInit {
     }
     const adjustedPathData = pathData.slice(0, totalLength);
     return adjustedPathData;
-  }
+  };
 }

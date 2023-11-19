@@ -1,20 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import { CommitDetails } from 'src/app/commitsModule/models/commit.model';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-presentation',
   templateUrl: './presentation.component.html',
   styleUrls: ['./presentation.component.scss']
 })
-export class PresentationComponent implements OnInit {
+export class PresentationComponent {
+  @Input() projectTitle: string = '';
+  @Input() projectSide: string = '';
 
   constructor() {}
 
-  ngOnInit(): void {
-    //
-  }
-
-  showFrontCommit(commit: CommitDetails) {
-    console.log(commit)
-  }
 }
