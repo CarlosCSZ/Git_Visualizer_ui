@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 
 import { environment } from 'src/app/environments/environment';
-import { CommitsService } from 'src/app/services/commits.service';
-import { CommitsStorageService } from 'src/app/services/commits-storage.service';
+import { CommitsService } from 'src/app/commitsModule/services/commits.service';
+import { CommitsStorageService } from 'src/app/commitsModule/services/commits-storage.service';
 
 @Component({
   selector: 'app-home',
@@ -48,5 +48,7 @@ export class HomeComponent implements OnInit{
         this.mensaje.error(`No se pudo encontrar commits de ${this.backRepo}. Intentelo mas tarde.`);
       }
     });
+
+    this.commitsStorageService.setPrivateCommits([], '');
   }
 }

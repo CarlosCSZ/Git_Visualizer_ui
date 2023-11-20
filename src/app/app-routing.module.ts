@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CommitsComponent } from './commitsModule/commits.component';
 import { HomeComponent } from './commitsModule/pages/home/home.component';
-import { PrivateComponent } from './commitsModule/pages/private.component';
+import { PrivateComponent } from './commitsModule/pages/private/private.component';
 
 const routes: Routes = [
   {

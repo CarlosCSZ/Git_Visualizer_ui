@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { CommitDetails } from 'src/app/commitsModule/models/commit.model';
-import { CommitsStorageService } from 'src/app/services/commits-storage.service';
+import { CommitsStorageService } from 'src/app/commitsModule/services/commits-storage.service';
 
 @Component({
   selector: 'app-commit-details',
@@ -30,9 +30,16 @@ export class CommitDetailsComponent implements OnInit {
       this.commitsStorageService.frontState$.subscribe((state) => {
         this.render = state;
       });
-    } else {
+    }
+    if (this.side === 'back') {
       this.commit = this.commitsStorageService.getBackCommit();
       this.commitsStorageService.backState$.subscribe((state) => {
+        this.render = state;
+      });
+    }
+    if (!this.side) {
+      this.commit = this.commitsStorageService.getPrivateCommit();
+      this.commitsStorageService.privateState$.subscribe((state) => {
         this.render = state;
       });
     }

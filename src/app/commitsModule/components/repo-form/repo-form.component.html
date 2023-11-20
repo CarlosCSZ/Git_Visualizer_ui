@@ -1,22 +1,25 @@
 <section class="repo-form">
   <div class="row align-items-center justify-content-center">
     <div class="col-md-6">
-      <form class="formulario" autocomplete="off" >
-        <div class="title">
-          <h1 class="title-repo-form text-center">Which private repository would you like to view?</h1>
-          <p><span>Recommendation: </span> For security reasons, consider deleting the access token used to access the private repository after completing this process.</p>
+      <form class="formulario" autocomplete="off" [formGroup]="commitsFrom">
+        <h1 class="title-repo-form text-center">Do you want to visualize one of your private repository?</h1>
+
+        <div class="datos">
+          <div class="labels">
+            <label for="owner">Repository's Owner: </label>
+            <label for="repo">Repository's Name: </label>
+            <label for="token">GitHub Token: </label>
+          </div>
+          <div class="inputs">
+            <input type="text" name="owner" id="owner" autocomplete="off" formControlName="owner">
+            <input type="text" name="repo" id="repo" autocomplete="off" formControlName="repo">
+            <input type="text" name="token" id="token" autocomplete="off" formControlName="token">
+          </div>
         </div>
 
-        <div class="name">
-          <label for="repo-name">Repository's Name: </label>
-          <input type="text" name="repo-name" id="repo-name" autocomplete="off">
-        </div>
-        <div class="token">
-          <label for="access-token">Access Token: </label>
-          <input type="text" name="access-token" id="access-token" autocomplete="off">
-        </div>
-
+        <p><span>Warning: </span> For security reasons, consider deleting the GitHub token used to access the private repository after completing this process.</p>
       </form>
+      <button class="buscar" (click)="requestCommits()"><img src="assets/img/busqueda.webp" alt="icon">Get Commits</button>
     </div>
   </div>
 </section>

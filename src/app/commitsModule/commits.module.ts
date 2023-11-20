@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ToastrModule } from 'ngx-toastr';
 
 import { CommitsRoutingModule } from './commits-routing.module';
 import { CommitsComponent } from './commits.component';
@@ -9,7 +11,7 @@ import { GraphComponent } from './components/graph/graph.component';
 import { PresentationComponent } from './components/presentation/presentation.component';
 import { CommitDetailsComponent } from './components/commit-details/commit-details.component';
 import { HomeComponent } from './pages/home/home.component';
-import { PrivateComponent } from './pages/private.component';
+import { PrivateComponent } from './pages/private/private.component';
 import { RepoFormComponent } from './components/repo-form/repo-form.component';
 
 
@@ -27,7 +29,14 @@ import { RepoFormComponent } from './components/repo-form/repo-form.component';
   ],
   imports: [
     CommonModule,
-    CommitsRoutingModule
+    CommitsRoutingModule,
+    FormsModule,
+    ReactiveFormsModule,
+    ToastrModule.forRoot({
+      positionClass: 'toast-center-left',
+      preventDuplicates: false,
+      closeButton: true,
+    }),
   ]
 })
 export class CommitsModule { }

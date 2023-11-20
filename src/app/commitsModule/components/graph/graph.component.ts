@@ -7,7 +7,7 @@ import {
 import * as d3 from 'd3';
 
 import { CommitDetails } from 'src/app/commitsModule/models/commit.model';
-import { CommitsStorageService } from 'src/app/services/commits-storage.service';
+import { CommitsStorageService } from 'src/app/commitsModule/services/commits-storage.service';
 
 @Component({
   selector: 'app-graph',
@@ -45,8 +45,19 @@ export class GraphComponent implements OnInit {
             this.loading = false;
           }
         });
-    } else {
+    }
+    if (this.side === 'back') {
       this.commitsStorageService.backCommits$
+        .subscribe((commits) => {
+          this.commits = commits;
+          if (this.commits.length > 0) {
+            this.showGraph();
+            this.loading = false;
+          }
+        });
+    }
+    if (!this.side) {
+      this.commitsStorageService.privateCommits$
         .subscribe((commits) => {
           this.commits = commits;
           if (this.commits.length > 0) {
@@ -180,8 +191,12 @@ export class GraphComponent implements OnInit {
     this.svg.selectAll('circle').on('click', (event: any, d: any) => {
       if (this.side === 'front') {
         this.commitsStorageService.setFrontCommit(d);
-      } else {
+      }
+      if (this.side === 'back') {
         this.commitsStorageService.setBackCommit(d);
+      }
+      if (!this.side) {
+        this.commitsStorageService.setPrivateCommit(d);
       }
     });
   };
