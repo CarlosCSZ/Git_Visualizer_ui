@@ -1,0 +1,144 @@
+.nav-bar {
+  display: block;
+  position: fixed;
+  box-shadow: 0px 2px 5px rgb(black, .2);
+  background-color: #b695c2;
+  width: 100%;
+  opacity: 0.8;
+  margin-bottom: 40px;
+
+  ul {
+    padding-left: 0;
+  }
+
+  .web {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5% 5%;
+
+    img {
+      width: 3.5em;
+      background-color: #eee7f0;
+      border-radius: 50%;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      width: 5%;
+      justify-content: space-around;
+      h3 {
+        font-size: 1.4rem;
+        font-weight: 900;
+      }
+    }
+
+    .sections {
+      padding-top: 3px;
+      margin-right: 25%;
+      width: 22%;
+
+      li {
+        padding: .8% 6%;
+        background-color: rgb(117 104 138);
+        opacity: 1;
+        font-size: 1.6rem;
+        font-weight: 600;
+        border-radius: 25px;
+      }
+    }
+
+    .social-info {
+      padding-top: 3px;
+      width: 35%;
+    }
+    .social-networks-list, .categories {
+      display: flex;
+      justify-content: space-around;
+      list-style: none;
+      margin: auto 0;
+
+      li {
+        margin: auto;
+      }
+      a {
+        text-decoration: none;
+      }
+      img {
+        width: 3em;
+      }
+    }
+  }
+  .mobile {
+    display: none;
+  }
+
+  .menu-button {
+    font-size: 1.6rem;
+    cursor: pointer;
+    background: none;
+    border: .5px solid rgb(174, 141, 209);
+    border-radius: 10px;
+    position: relative;
+    padding: 5px 15px;
+    margin: auto;
+  }
+
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: -250px;
+    width: 250px;
+    height: 100%;
+    background-color: #b695c2;
+    transition: left 0.3s ease-in-out;
+  }
+
+  .sidebar.show {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    justify-content: flex-start;
+    align-items: center;
+    left: 0;
+
+    .menu-button {
+      margin: 10px auto;
+    }
+  }
+
+  .sidebar-categories {
+    list-style: none;
+    padding-top: 30px;
+  }
+
+  .sidebar-categories li {
+    padding: 10px 0;
+  }
+
+  .sidebar-categories a {
+    text-decoration: none;
+    font-size: 1.6rem;
+    color: #462a2f;
+    font-weight: 700;
+  }
+
+  .sidebar-categories li:hover {
+    border: 1px solid #462a2f;
+  }
+}
+
+@media screen and (max-width: 756px) {
+  .web {
+    margin-left: -3%;
+    .sections {
+      display: none;
+    }
+    .logo {
+      margin-left: -30%;
+    }
+  }
+  .mobile {
+    display: flex !important;
+  }
+
+}

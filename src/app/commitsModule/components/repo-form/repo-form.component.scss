@@ -1,0 +1,70 @@
+.repo-form {
+  color: #ebdede;
+  background-color: #4f386d;
+  padding-top: 70px;
+
+  .title-repo-form {
+    padding: 16px;
+  }
+
+  .formulario {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    max-width: 600px;
+
+    .form-btn {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      border-radius: 5px;
+      justify-content: center;
+      font-size: 1.4rem;
+      font-weight: 600;
+      width: 160px;
+      background-color: #f8f9fa;
+      svg {
+        width: 32px;
+        height: 32px;
+      }
+    }
+
+    .form-area {
+      display: flex;
+      flex-direction: column;
+      padding: 1rem;
+
+      .form-item {
+        display: flex;
+        flex-direction: column;
+        padding: 0, 16px;
+
+        label {
+          font-weight: 500;
+          font-size: larger;
+        }
+
+        input {
+          font-weight: 500;
+          font-size: large;
+          width: 100%;
+          padding: 0 1%;
+          box-shadow: 3px 3px 5px 2px rgba(0, 0, 0, 0.2);
+        }
+      }
+    }
+
+    .form-footer{
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+
+  .form-legend {
+    padding: 16px 32px;
+    text-align: center;
+  }
+}

@@ -1,7 +1,7 @@
 .commits-path {
   display: flex;
   justify-content: center;
-  max-height: 230px;
+  max-height: 180px;
   overflow-y: scroll;
 }
 .loader {
@@ -9,12 +9,11 @@
   justify-content: center;
   position: absolute;
   left: calc(30%);
-  width: 25%;
   max-width: 100px;
 
   img {
-    width: 90%;
-    margin-top: 45%;
+    width: 75%;
+    margin-top: 60%;
     border-radius: 50%;
     background-color: #fff;
     filter: invert(110%) sepia(30%) saturate(544%) hue-rotate(200deg);
@@ -41,24 +40,24 @@
   }
 }
 
-@media screen and (min-width: 350px) and (max-width: 524.99px) {
+@media screen and (min-width: 370px) and (max-width: 524.99px) {
   .loader {
     left: calc(38%);
     width: 20%;
 
     img {
-      margin-top: 60%;
+      margin-top: 85%;
     }
   }
 }
 
-@media screen and (max-width: 349.99px) {
+@media screen and (max-width: 369.99px) {
   .loader {
     left: calc(40%);
     width: 20%;
 
     img {
-      margin-top: 65%;
+      margin-top: 120%;
     }
   }
 }

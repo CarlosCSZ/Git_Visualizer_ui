@@ -1,11 +1,23 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AppComponent } from './app.component';
+import { CommitsComponent } from './commitsModule/commits.component';
+import { HomeComponent } from './commitsModule/pages/home/home.component';
+import { PrivateComponent } from './commitsModule/pages/private/private.component';
 
 const routes: Routes = [
   {
     path: 'home',
-    component: AppComponent
+    component: CommitsComponent,
+    children: [
+      {
+        path: '',
+        component: HomeComponent
+      },
+      {
+        path: 'privatecommits',
+        component: PrivateComponent
+      }
+    ]
   },
   {
     path: "",

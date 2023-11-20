@@ -1,0 +1,33 @@
+<section class="repo-form">
+  <h1 class="title-repo-form text-center">Do you want to visualize one of your private repository?</h1>
+  <div class="row align-items-center justify-content-center">
+      <form class="formulario" autocomplete="off" [formGroup]="commitsFrom">
+
+        <div class="form-area">
+          <div class="form-item">
+            <label for="owner">Repository's Owner: </label>
+            <input type="text" name="owner" id="owner" autocomplete="off" formControlName="owner">
+          </div>
+
+          <div class="form-item">
+            <label for="repo">Repository's Name: </label>
+            <input type="text" name="repo" id="repo" autocomplete="off" formControlName="repo">
+          </div>
+
+          <div class="form-item">
+            <label for="token">GitHub Token: </label>
+            <input type="text" name="token" id="token" autocomplete="off" formControlName="token">
+          </div>
+        </div>
+        <div class="form-footer">
+          <button class="form-btn" (click)="requestCommits()">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 15.75l-2.489-2.489m0 0a3.375 3.375 0 10-4.773-4.773 3.375 3.375 0 004.774 4.774zM21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <span>Get Commits</span>
+          </button>
+        </div>
+        <span class="form-legend">Warning:For security reasons, consider deleting the GitHub token used to access the private repository after completing this process.</span>
+      </form>
+  </div>
+</section>
