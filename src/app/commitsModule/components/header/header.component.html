@@ -1,5 +1,19 @@
 <section class="nav-bar">
   <div class="web">
+    <div class="mobile">
+      <button class="menu-button" (click)="toggleSidebar()">☰</button>
+      <div class="sidebar" [class.show]="sidebarOpen">
+        <button class="menu-button" (click)="toggleSidebar()">☰</button>
+        <ul class="sidebar-categories">
+          <li>
+            <a routerLink="home" (click)="toggleSidebar()">Home</a>
+          </li>
+          <li>
+            <a routerLink="privatecommits" (click)="toggleSidebar()">Private</a>
+          </li>
+        </ul>
+      </div>
+    </div>
     <div class="logo">
       <img src="assets/icons/git.png" alt="logo">
       <h3>GV</h3>

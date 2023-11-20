@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -6,17 +6,20 @@ import { Router } from '@angular/router';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent {
+  sidebarOpen: boolean = false;
+
   constructor(private router: Router) {}
 
-  ngOnInit(): void {
-
-  }
 
   getColor(route: string) {
     if(this.router.url === route) {
       return 'white'
     }
     return 'black'
+  }
+
+  toggleSidebar() {
+    this.sidebarOpen = !this.sidebarOpen;
   }
 }
